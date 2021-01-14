@@ -16,16 +16,14 @@ type PviewLimit struct {
 	Threshold uint   `json:"threshold" binding:"required"`
 }
 
-/*
 func PviewCheck(c *models.Content) string {
-	var p Pview
+	p := new(Pview)
 	if err := json.Unmarshal(c.Data, &p); err != nil {
 		return err.Error()
 	}
-	fmt.Println(p)
+	c.Data = p
 	return ""
 }
-*/
 
 func PviewLimitCheck(c *models.Content) string {
 	p := new(PviewLimit)

@@ -6,13 +6,13 @@ import (
 )
 
 func main() {
-	ip := "1.1.1.0/24"
+	ip := "1.1.1.257"
 	address := net.ParseIP(ip)
 	if address == nil {
 		// 没有匹配上
-		fmt.Println("NOT IP:", ip)
+		fmt.Println("error:", ip)
 	} else {
 		// 匹配上
-		fmt.Println("IS IP:", address)
+		fmt.Println(address)
 	}
 }

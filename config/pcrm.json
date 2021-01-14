@@ -2,7 +2,7 @@
 	"_": "下划线内容均为注释",
 
 	"_": "本程序监听端口",
-    "ListenPort": 9999,
+    "ListenPort": 39999,
 
 	"_": "mysql数据库配置",
     "Sql": {
@@ -10,7 +10,7 @@
         "Port": 3306,
         "User": "root",
         "Pass": "HeYiChen@17791",
-        "Database": "pcrm"
+        "Database": "gocrm"
     },
 
 	"_": "bind配置",
