@@ -9,10 +9,14 @@ import (
 //心跳接口get请求，返回设备id，ms id等信息
 func Heartbeat(c *gin.Context) {
 	m := make(map[string]interface{})
-	m["status"] = "running"
+	mid := models.GetMsId()
+	if MsID != 0 {
+		mid = MsID
+	}
+	m["status"] = Status
 	m["msrelease"] = MsRelease
 	m["devicerelease"] = "1.0"
-	m["msversion"] = models.GetMsId()
+	m["msversion"] = mid
 	m["deviceversion"] = models.GetDevId()
 	m["softwareversion"] = config.Version
 	m["licenseinfo"] = "abcABC=="
@@ -29,7 +33,9 @@ func ResetMsId(c *gin.Context) {
 	} else {
 		if mid, ok := m["msversion"]; ok {
 			if id, ok := mid.(float64); ok {
-				models.SetMsId(uint(id))
+				mid := uint(id)
+				models.SetMsId(mid)
+				MsID = mid
 				c.JSON(200, gin.H{"status": "success"})
 				return
 			}

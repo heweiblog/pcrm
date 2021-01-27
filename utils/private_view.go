@@ -18,7 +18,7 @@ type PviewLimit struct {
 
 func PviewCheck(c *models.Content) string {
 	p := new(Pview)
-	if err := json.Unmarshal(c.Data, &p); err != nil {
+	if err := json.Unmarshal(c.Jdata, &p); err != nil {
 		return err.Error()
 	}
 	c.Data = p

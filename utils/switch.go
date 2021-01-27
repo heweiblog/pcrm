@@ -5,6 +5,23 @@ import (
 	"pcrm/models"
 )
 
+type Switch struct {
+	Switch string `json:"switch" binding:"required"`
+}
+
+func SwitchCheck(c *models.Content) string {
+	p := new(Switch)
+	if err := json.Unmarshal(c.Jdata, p); err != nil {
+		return err.Error()
+	}
+	if p.Switch != "enable" && p.Switch != "diaable" {
+		return "switch " + p.Switch + " format error"
+	}
+	c.Data = p
+	return ""
+}
+
+/*
 func SwitchCheck(c *models.Content) string {
 	m := make(map[string]interface{})
 	if err := json.Unmarshal(c.Jdata, &m); err != nil {
@@ -19,3 +36,4 @@ func SwitchCheck(c *models.Content) string {
 	}
 	return "switch format error"
 }
+*/

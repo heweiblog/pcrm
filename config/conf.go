@@ -6,13 +6,9 @@ import (
 	"os"
 )
 
-type Listen struct {
-	Ip   string
-	Port int
-}
-
 type Mysql struct {
-	Listen
+	Ip       string
+	Port     int
 	User     string
 	Pass     string
 	Database string
@@ -21,9 +17,6 @@ type Mysql struct {
 type Config struct {
 	ListenPort int
 	Sql        Mysql
-	Ybind      Listen
-	Nap        Listen
-	Ms         string
 }
 
 var (

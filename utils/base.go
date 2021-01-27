@@ -34,7 +34,7 @@ type BaseMap map[string]func(c *models.Content) string
 
 const (
 	DnsService = "dns"
-	ZrpService = "handle"
+	ZrpService = "zrp"
 	MsSource   = "ms"
 )
 
@@ -56,6 +56,9 @@ func init() {
 	//CheckMethods["dns"+"view"+"rules"] = PviewCheck
 	CheckMethods["dns"+"view"+"qpslimit"] = PviewLimitCheck
 	//HandleMethods["dns"+"view"+"qpslimit"] = ViewLimitHandle
+	CheckMethods["zrp"+"zrpaccesscontrol"+"switch"] = SwitchCheck
+	CheckMethods["zrp"+"zrpaccesscontrol"+"rules"] = ZidCheck
+	CheckMethods["zrp"+"backend"+"forwardserver"] = BackendForwardCheck
 }
 
 //发送json数据 可满足所有请求方法
@@ -100,11 +103,14 @@ func HandleData(c []models.Content) {
 		key := c[i].Service + c[i].Bt + c[i].Sbt
 		if f, ok := CheckMethods[key]; ok {
 			//校验模块
-			if res := f(&c[i]); res == "" {
+			res := f(&c[i])
+			if res == "" {
 				//校验通过 入队(通道) 直接启动协程
 				//go testPost(d)
 				fmt.Println("数据校验通过", c)
 				fmt.Println(reflect.TypeOf(c[i].Data))
+			} else if res == "done" {
+				fmt.Println("数据无需配置", res)
 			} else {
 				//校验失败，直接记录oplog，或者发到通道，在另一个协程中收取写入
 				fmt.Println("数据校验失败", res)
